@@ -1,11 +1,39 @@
 import React from "react";
+import { useEffect,useState } from "react";
+
 
 function Navbar()
 {
+  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    fetchSubCategories();
+  }, []);
+
+  const fetchSubCategories = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/allCategoryList', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      setCategories(data); // assuming your API returns an array of subcategories
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
     return(
 
     <>
-
+console.log(subCategories);
   {/* <div
      id="spinner"
     className="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center"
@@ -74,10 +102,10 @@ function Navbar()
                 className="nav-link dropdown-toggle"
                 data-bs-toggle="dropdown"
               >
-                Pages
+                Items
               </a>
               <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                <a href="cart.html" className="dropdown-item">
+                {/* <a href="cart.html" className="dropdown-item">
                   Cart
                 </a>
                 <a href="chackout.html" className="dropdown-item">
@@ -88,7 +116,12 @@ function Navbar()
                 </a>
                 <a href="404.html" className="dropdown-item">
                   404 Page
-                </a>
+                </a> */}
+                        {categories.map((category) => (
+                          <a href="cart.html" className="dropdown-item">
+                          {category.category_name}
+                        </a>
+                                  ))}
               </div>
             </div>
             <a href="contact.html" className="nav-item nav-link">
