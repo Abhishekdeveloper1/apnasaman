@@ -12,7 +12,7 @@ function Navbar()
 
   const fetchSubCategories = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/allCategoryList', {
+      const response = await fetch('http://127.0.0.1:8000/api/getCategoriesWithSubcategories', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -29,11 +29,11 @@ function Navbar()
       setError(error.message);
     }
   };
-
+console.log(categories);
     return(
 
     <>
-console.log(subCategories);
+{/* console.log(subCategories); */}
   {/* <div
      id="spinner"
     className="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center"
@@ -105,24 +105,32 @@ console.log(subCategories);
                 Items
               </a>
               <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                {/* <a href="cart.html" className="dropdown-item">
-                  Cart
+  {/* Iterate over the categories */}
+  {categories.map((category) => (
+    <div key={category.categoryId}>
+      {/* Display the category */}
+      <a href={category.categoryId} className="dropdown-item">
+        {category.productname}
+      </a>
+
+      {/* Check if there are subcategories and iterate over them */}
+      {category.subcategories && (
+        <div className="submenu">
+          <ul className="subcategory-list">
+            {category.subcategories.map((subcategory) => (
+              <li key={subcategory.subcategoryID}>
+                <a href={subcategory.subcategoryID} className="dropdown-item subcategory-item">
+                  {subcategory.subcategoryname}
                 </a>
-                <a href="chackout.html" className="dropdown-item">
-                  Chackout
-                </a>
-                <a href="testimonial.html" className="dropdown-item">
-                  Testimonial
-                </a>
-                <a href="404.html" className="dropdown-item">
-                  404 Page
-                </a> */}
-                        {categories.map((category) => (
-                          <a href="cart.html" className="dropdown-item">
-                          {category.category_name}
-                        </a>
-                                  ))}
-              </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  ))}
+</div>
+   
             </div>
             <a href="contact.html" className="nav-item nav-link">
               Contact

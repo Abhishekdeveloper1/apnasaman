@@ -8,9 +8,10 @@ import Bestseller from "./bestseller";
 import Testimonial from "./testimonial";
 import Footer from "./footer";
 import MainContent from "./mainContent";
+import Productlist from "./productlist";
 function Index(){
 return(
-  <MainContent/>
+  <Productlist/>
 
 )
 }
