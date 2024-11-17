@@ -1,5 +1,6 @@
 import React from "react";
 import { useEffect,useState } from "react";
+import { Link } from "react-router-dom";
 
 
 function Navbar()
@@ -33,7 +34,7 @@ console.log(categories);
     return(
 
     <>
-{/* console.log(subCategories); */}
+console.log(subCategories);
   {/* <div
      id="spinner"
     className="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center"
@@ -87,9 +88,12 @@ console.log(categories);
         </button>
         <div className="collapse navbar-collapse bg-white" id="navbarCollapse">
           <div className="navbar-nav mx-auto">
-            <a href="index.html" className="nav-item nav-link active">
+            {/* <a href="index.html" className="nav-item nav-link active">
               Home
-            </a>
+            </a> */}
+            <Link to={'/'} className="nav-item nav-link active">
+              Home
+            </Link>
             <a href="shop.html" className="nav-item nav-link">
               Shop
             </a>
@@ -109,7 +113,7 @@ console.log(categories);
   {categories.map((category) => (
     <div key={category.categoryId}>
       {/* Display the category */}
-      <a href={category.categoryId} className="dropdown-item">
+      <a href="#" className="dropdown-item">
         {category.productname}
       </a>
 
@@ -119,9 +123,12 @@ console.log(categories);
           <ul className="subcategory-list">
             {category.subcategories.map((subcategory) => (
               <li key={subcategory.subcategoryID}>
-                <a href={subcategory.subcategoryID} className="dropdown-item subcategory-item">
+                {/* <a href="#" className="dropdown-item subcategory-item">
                   {subcategory.subcategoryname}
-                </a>
+                </a> */}
+                <Link to={`/Productlist/${subcategory.subcategoryID}`} className="dropdown-item subcategory-item">
+                  {subcategory.subcategoryname}
+                </Link>
               </li>
             ))}
           </ul>
