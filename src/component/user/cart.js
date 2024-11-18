@@ -1,13 +1,8 @@
 import React from "react";
 import { useState,useEffect } from "react";
 import { json } from "react-router-dom";
+import Navbar from "./navbar";
 function Cart() {
-    // const [totalCatrtProducts,getCartProducts]=useState(null);
-    // useEffect(()=>{
-    //     const existingCart=JSON.parse(localStorage.getItem('cart'))||[];
-    //     getCartProducts(existingCart);
-    // },[])
-    // alert(totalCatrtProducts.length);
     const [totalCartProducts, setCartProducts] = useState([]);
 
     useEffect(() => {
@@ -15,8 +10,21 @@ function Cart() {
       const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
       setCartProducts(existingCart);
     }, []);
+
+    const removeFromCart = (productId) => {
+        alert(productId);
+        // return;
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const updatedCart = existingCart.filter((cartItem) => cartItem.id !== productId);
+      
+        setCartProducts(updatedCart); // Update state to trigger re-render
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
+        alert("Product removed from cart!");
+      };
     return (
         <>
+              <Navbar cartCount={totalCartProducts.length} />
+
           <div className="container-fluid py-5">
             <div className="container py-5">
               <div className="table-responsive">
@@ -81,7 +89,8 @@ function Cart() {
                             </p>
                           </td>
                           <td>
-                            <button className="btn btn-md rounded-circle bg-light border mt-4">
+                            <button className="btn btn-md rounded-circle bg-light border mt-4"  onClick={() => removeFromCart(product.id)}>
+                                
                               <i className="fa fa-times text-danger"></i>
                             </button>
                           </td>
