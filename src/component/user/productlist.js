@@ -5,12 +5,14 @@ import Serachbar from "./serachbar";
 import Featurs from "./featurs";
 import Testimonial from "./testimonial";
 import Footer from "./footer";
+import Cart from "./cart";
 
 function Productlist() {
   const { id } = useParams(); // Get the category/product ID from the route
   const [productDatas, setProductData] = useState([]); // Store API response (default to an empty array)
   const [loading, setLoading] = useState(true); // Show loading state
   const [error, setError] = useState(null); // Capture error messages
+  const [cart, setCart] = useState([]);
 
   // Fetch products based on ID
   const fetchProductData = async (productId) => {
@@ -36,10 +38,30 @@ function Productlist() {
     }
   }, [id]);
 
+  const addToCart=(product)=>{
+    const productData={id:product.id,name:product.name,price:product.price,image1:product.image1};
+
+    // alert(productData);
+    // console.log(product);
+    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const productExists = existingCart.some((cartItem) => cartItem.id === product.id);
+    if (productExists) {
+      alert(`${product.name} is already in the cart!`);
+      return; // Exit the function without adding the product
+    }
+  
+    // alert(existingCart);
+    const updatedCart = [...existingCart, productData];
+    setCart(updatedCart); // Update state to trigger re-render
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    alert(`${product.name} added to cart!`);
+
+
+  }
   // Render loading, error, or product list
   return (
     <>
-      <Navbar />
+      <Navbar cartCount={cart.length} />
       <Serachbar />
       <Featurs />
 
@@ -77,19 +99,19 @@ function Productlist() {
                               {/* Image Section */}
                               <div className="fruite-img">
                                 <img
-                                  src={productData.imageUrl || "/assets/img/fruite-item-5.jpg"}
+                                  src={productData.image1 || "/assets/img/fruite-item-5.jpg"}
                                   className="img-fluid w-100 rounded-top"
                                   alt={productData.name || "Product Image"}
                                 />
                               </div>
 
                               {/* Category Badge */}
-                              <div
+                              {/* <div
                                 className="text-white bg-secondary px-3 py-1 rounded position-absolute"
                                 style={{ top: 10, left: 10 }}
                               >
                                 {productData.category || "Category"}
-                              </div>
+                              </div> */}
 
                               {/* Product Details */}
                               <div className="p-4 border border-secondary border-top-0 rounded-bottom">
@@ -102,9 +124,20 @@ function Productlist() {
                                   <p className="text-dark fs-5 fw-bold mb-0">
                                     {productData.price ? `$${productData.price} / kg` : "$4.99 / kg"}
                                   </p>
-                                  <a
+                                  {/* <a
                                     href="#"
                                     className="btn border border-secondary rounded-pill px-3 text-primary"
+                                  >
+                                    <i className="fa fa-shopping-bag me-2 text-primary" />
+                                    Add to cart
+                                  </a> */}
+                                   <a
+                                    href="#"
+                                    className="btn border border-secondary rounded-pill px-3 text-primary"
+                                    onClick={(e) => {
+                                      e.preventDefault(); // Prevent page reload
+                                      addToCart(productData); // Call the function to store product data
+                                    }}
                                   >
                                     <i className="fa fa-shopping-bag me-2 text-primary" />
                                     Add to cart

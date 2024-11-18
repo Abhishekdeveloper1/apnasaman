@@ -3,9 +3,12 @@ import { useEffect,useState } from "react";
 import { Link } from "react-router-dom";
 
 
-function Navbar()
+function Navbar({cartCount})
 {
+  // alert(cartCount);
   const [categories, setCategories] = useState([]);
+  const [totalCatrtCount,setCartcount]=useState(0);
+
   const [error, setError] = useState(null);
   useEffect(() => {
     fetchSubCategories();
@@ -31,6 +34,12 @@ function Navbar()
     }
   };
 console.log(categories);
+
+    useEffect(()=>{
+        const existingCart=JSON.parse(localStorage.getItem('cart'))||[];
+        setCartcount(existingCart.length);
+    },[cartCount])
+    // alert(totalCatrtCount);
     return(
 
     <>
@@ -157,7 +166,7 @@ console.log(subCategories);
                 className="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                 style={{ top: "-5px", left: 15, height: 20, minWidth: 20 }}
               >
-                3
+                {totalCatrtCount||0}
               </span>
             </a>
             <a href="#" className="my-auto">

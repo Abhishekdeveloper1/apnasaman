@@ -11,6 +11,7 @@ import Testimonial from "./testimonial";
 import Footer from "./footer";
 import MainContent from "./mainContent";
 import Productlist from "./productlist";
+import Cart from "./cart";
 function Index(){
 return(
   <div>  
@@ -19,6 +20,8 @@ return(
     <Routes>
       <Route path="/" element={<MainContent/>}></Route>
       <Route path="/Productlist/:id" element={<Productlist/>}></Route>
+      <Route path="/cart" element={<Cart/>}></Route>
+
 
     </Routes>
     </BrowserRouter>
