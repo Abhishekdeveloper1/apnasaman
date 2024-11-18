@@ -12,8 +12,6 @@ function Cart() {
     }, []);
 
     const removeFromCart = (productId) => {
-        alert(productId);
-        // return;
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         const updatedCart = existingCart.filter((cartItem) => cartItem.id !== productId);
       
