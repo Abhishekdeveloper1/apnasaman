@@ -39,7 +39,7 @@ function Productlist() {
   }, [id]);
 
   const addToCart=(product)=>{
-    const productData={id:product.id,name:product.name,price:product.price,image1:product.image1};
+    const productData={id:product.id,name:product.name,price:product.price,image1:product.image1,quantity:1};
 
     // alert(productData);
     // console.log(product);
@@ -54,6 +54,7 @@ function Productlist() {
     const updatedCart = [...existingCart, productData];
     setCart(updatedCart); // Update state to trigger re-render
     localStorage.setItem("cart", JSON.stringify(updatedCart));
+    // alert(updatedCart.length);
     alert(`${product.name} added to cart!`);
 
 
