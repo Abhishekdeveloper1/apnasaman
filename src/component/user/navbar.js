@@ -169,9 +169,9 @@ console.log(subCategories);
                 {totalCatrtCount||0}
               </span>
             </Link>
-            <a href="#" className="my-auto">
+            <Link to={'/login'} className="my-auto">
               <i className="fas fa-user fa-2x" />
-            </a>
+            </Link>
           </div>
         </div>
       </nav>

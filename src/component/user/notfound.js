@@ -1,8 +1,13 @@
 import React from "react";
+import Footer from "./footer";
+import Serachbar from "./serachbar";
+
+
 function Notfound()
 {
 return(
     <>
+    <Serachbar/>
         <div class="container-fluid py-5">
             <div class="container py-5 text-center">
                 <div class="row justify-content-center">
@@ -16,6 +21,7 @@ return(
                 </div>
             </div>
         </div>
+        <Footer/>
     </>
 );
 }

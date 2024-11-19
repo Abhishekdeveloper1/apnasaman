@@ -13,6 +13,8 @@ import MainContent from "./mainContent";
 import Productlist from "./productlist";
 import Cart from "./cart";
 import Notfound from "./notfound";
+import Login from "./login";
+import Signup from "./signup";
 function Index(){
 return(
   <div>  
@@ -23,6 +25,10 @@ return(
       <Route path="/Productlist/:id" element={<Productlist/>}></Route>
       <Route path="/cart" element={<Cart/>}></Route>
       <Route path="/*" element={<Notfound/>}></Route>
+      <Route path="/login" element={<Login/>}></Route>
+      <Route path="/register" element={<Signup/>}></Route>
+
+
 
 
 

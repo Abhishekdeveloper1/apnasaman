@@ -2,6 +2,11 @@ import React from "react";
 import { useState,useEffect } from "react";
 import { json } from "react-router-dom";
 import Navbar from "./navbar";
+import Serachbar from "./serachbar";
+import Featurs from "./featurs";
+import Footer from "./footer";
+
+
 function Cart() {
     const [totalCartProducts, setCartProducts] = useState([]);
 
@@ -47,6 +52,8 @@ function Cart() {
     return (
         <>
               <Navbar cartCount={totalCartProducts.length} />
+              <Serachbar />
+      {/* <Featurs /> */}
 
           <div className="container-fluid py-5">
             <div className="container py-5">
@@ -182,6 +189,7 @@ function Cart() {
               </div>
             </div>
           </div>
+          <Footer/>
         </>
       );
 }
