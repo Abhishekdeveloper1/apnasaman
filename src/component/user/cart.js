@@ -14,11 +14,36 @@ function Cart() {
     const removeFromCart = (productId) => {
         const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
         const updatedCart = existingCart.filter((cartItem) => cartItem.id !== productId);
-      
         setCartProducts(updatedCart); // Update state to trigger re-render
         localStorage.setItem("cart", JSON.stringify(updatedCart));
         alert("Product removed from cart!");
       };
+      const addtoCart=(productId)=>{
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const productIndex = existingCart.findIndex((cartItem) => cartItem.id === productId);
+        if (productIndex !== -1) {
+            // alert(existingCart[productIndex].price);
+            // If the product exists, increment its quantity
+            existingCart[productIndex].quantity += 1;
+          } 
+          localStorage.setItem("cart", JSON.stringify(existingCart));
+          setCartProducts(existingCart);
+        console.log(productIndex);
+
+      }
+      const removetoCart=(productId)=>{
+        const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
+        const productIndex = existingCart.findIndex((cartItem) => cartItem.id === productId);
+        if (productIndex !== -1) {
+            if (existingCart[productIndex].quantity > 1) {
+              existingCart[productIndex].quantity -= 1;
+            } 
+      }
+      localStorage.setItem("cart", JSON.stringify(existingCart));
+      setCartProducts(existingCart);
+    //   alert("Product quantity updated!");
+
+    }
     return (
         <>
               <Navbar cartCount={totalCartProducts.length} />
@@ -56,7 +81,7 @@ function Cart() {
                             <p className="mb-0 mt-4">{product.name}</p>
                           </td>
                           <td>
-                            <p className="mb-0 mt-4">${product.price}</p>
+                            <p className="mb-0 mt-4">₹{product.price}</p>
                           </td>
                           <td>
                             <div
@@ -64,7 +89,7 @@ function Cart() {
                               style={{ width: "100px" }}
                             >
                               <div className="input-group-btn">
-                                <button className="btn btn-sm btn-minus rounded-circle bg-light border">
+                                <button className="btn btn-sm btn-minus rounded-circle bg-light border" onClick={() => removetoCart(product.id)}>
                                   <i className="fa fa-minus"></i>
                                 </button>
                               </div>
@@ -75,7 +100,7 @@ function Cart() {
                                 readOnly
                               />
                               <div className="input-group-btn">
-                                <button className="btn btn-sm btn-plus rounded-circle bg-light border">
+                                <button className="btn btn-sm btn-plus rounded-circle bg-light border" onClick={() => addtoCart(product.id)}>
                                   <i className="fa fa-plus"></i>
                                 </button>
                               </div>
@@ -83,7 +108,7 @@ function Cart() {
                           </td>
                           <td>
                             <p className="mb-0 mt-4">
-                              ${(product.price * product.quantity).toFixed(2)}
+                              ₹{(product.price * product.quantity).toFixed(2)}
                             </p>
                           </td>
                           <td>
@@ -117,7 +142,7 @@ function Cart() {
                       <div className="d-flex justify-content-between mb-4">
                         <h5 className="mb-0 me-4">Subtotal:</h5>
                         <p className="mb-0">
-                          $
+                          ₹
                           {totalCartProducts
                             .reduce(
                               (acc, product) =>
@@ -129,14 +154,14 @@ function Cart() {
                       </div>
                       <div className="d-flex justify-content-between">
                         <h5 className="mb-0 me-4">Shipping:</h5>
-                        <p className="mb-0">Flat rate: $3.00</p>
+                        <p className="mb-0">Flat rate: ₹3.00</p>
                       </div>
-                      <p className="mb-0 text-end">Shipping to Ukraine.</p>
+                      <p className="mb-0 text-end">Platfrom Fee.</p>
                     </div>
                     <div className="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                       <h5 className="mb-0 ps-4 me-4">Total:</h5>
                       <p className="mb-0 pe-4">
-                        $
+                        ₹
                         {(
                           totalCartProducts.reduce(
                             (acc, product) =>
